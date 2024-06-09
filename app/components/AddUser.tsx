@@ -1,8 +1,8 @@
 "use client";
 
-import { create } from "@/lib/features/userSlice";
+import { create, setSearchVal } from "@/lib/features/userSlice";
 import { useAppDispatch } from "@/lib/hooks";
-import React, { } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const AddUser = () => {
@@ -11,41 +11,67 @@ const AddUser = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
   } = useForm();
   //console.log(errors)
   const dispatch = useAppDispatch();
   const openAddUser = () => {
     document.getElementById("my_modal_1").showModal();
   };
+ 
+  const searchByName = (e) => {
+    dispatch(setSearchVal(e.target.value))
+  }
   return (
     <>
-      <div className="flex justify-center my-3">
-        <button
-          className="btn btn-outline btn-neutral btn-sm "
-          onClick={openAddUser}
-        >
+      <div className="flex justify-between my-5 mx-20">
+        <label className="input input-bordered flex items-center gap-2 w-150">
+          <input
+            type="text"
+            className="grow w-full max-w-150"
+            placeholder="Search by Name"
+            onChange={searchByName}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-4 h-4 opacity-70"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </label>
+        <button className="btn btn-neutral btn-md bg-gray-900 text-white" onClick={openAddUser}>
           Add User
         </button>
       </div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
 
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-        <form method="dialog">
-      {/* if there is a button in form, it will close the modal */}
-      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-    </form>
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
           <h3 className="text-lg text-center mb-3">Add User</h3>
           <form
             method="dialog"
             className="flex flex-col justify-center gap-y-2"
             onSubmit={handleSubmit((data) => {
-              dispatch(create({...data, id: Math.random().toString(16).slice(-4)}))
-              document.getElementById('my_modal_1')?.close()
+              dispatch(
+                create({ ...data, id: Math.random().toString(16).slice(-4) })
+              );
+              document.getElementById("my_modal_1")?.close();
               reset();
             })}
           >
+            <div className="label mb-0">
+              <span className="label-text">Name</span>
+            </div>
             <input
               {...register("name", { required: "Name is required" })}
               type="text"
@@ -55,6 +81,9 @@ const AddUser = () => {
             {errors.name && (
               <p className="text-red-500">{`${errors.name.message}`}</p>
             )}
+            <div className="label mb-0">
+              <span className="label-text">Age</span>
+            </div>
             <input
               {...register("age", { required: "Age is required" })}
               type="number"
@@ -64,8 +93,11 @@ const AddUser = () => {
             {errors.age && (
               <p className="text-red-500">{`${errors.age.message}`}</p>
             )}
+            <div className="label mb-0">
+              <span className="label-text">Birthday</span>
+            </div>
             <input
-              {...register("date", { required: "Birhday is required" })}
+              {...register("date", { required: "Birthday is required" })}
               type="date"
               placeholder="Birthday"
               className="input input-bordered  my-2"
@@ -74,6 +106,9 @@ const AddUser = () => {
               <p className="text-red-500">{`${errors.date.message}`}</p>
             )}
             <div className="form-control">
+              <div className="label mb-0">
+                <span className="label-text">Gender</span>
+              </div>
               <label className="label justify-start cursor-pointer">
                 <input
                   {...register("gender", { required: "Gender is required" })}
@@ -84,8 +119,6 @@ const AddUser = () => {
                 />
                 <span className="label-text">Male</span>
               </label>
-            </div>
-            <div className="form-control">
               <label className="label justify-start cursor-pointer">
                 <input
                   {...register("gender", { required: "Gender is required" })}
@@ -100,13 +133,13 @@ const AddUser = () => {
             {errors.gender && (
               <p className="text-red-500">{`${errors.gender.message}`}</p>
             )}
+            <div className="label mb-0">
+              <span className="label-text">Role</span>
+            </div>
             <select
               className="select select-bordered w-full my-2"
               {...register("role", { required: "Please select a user role" })}
             >
-              <option disabled>
-                Role
-              </option>
               <option value={"admin"}>Admin</option>
               <option value={"user"}>User</option>
               <option value={"guest"}>Guest</option>
@@ -133,11 +166,9 @@ const AddUser = () => {
             {errors.terms && (
               <p className="text-red-500">{`${errors.terms.message}`}</p>
             )}
-            <div>
-              
-            </div>
+            <div></div>
             <button
-              className="btn btn-primary w-28 ml-auto"
+              className="btn btn-primary w-28 ml-auto bg-gray-900 text-white"
               disabled={isSubmitting}
             >
               Create

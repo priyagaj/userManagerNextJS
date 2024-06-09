@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
     <header>
-      <h1 className="py-3 text-center">User Manager</h1>
+      <h1 className="py-3 text-center font-bold">User Manager</h1>
     </header>
     <main>
       <AddUser />

@@ -34,6 +34,12 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
 
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box">
+            <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    ✕
+                </button>
+            </form>
           <h3 className="text-lg text-center mb-3">Edit User</h3>
           <form
             method="dialog"
@@ -44,6 +50,9 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
               reset();
             })}
           >
+            <div className="label mb-0">
+              <span className="label-text">Name</span>
+            </div>
             <input
               {...register("name", { required: "Name is required" })}
               type="text"
@@ -53,6 +62,9 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
             {errors.name && (
               <p className="text-red-500">{`${errors.name.message}`}</p>
             )}
+            <div className="label mb-0">
+              <span className="label-text">Age</span>
+            </div>
             <input
               {...register("age", { required: "Age is required" })}
               type="number"
@@ -62,8 +74,11 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
             {errors.age && (
               <p className="text-red-500">{`${errors.age.message}`}</p>
             )}
+            <div className="label mb-0">
+              <span className="label-text">Birthday</span>
+            </div>
             <input
-              {...register("date", { required: "Birhday is required" })}
+              {...register("date", { required: "Birthday is required" })}
               type="date"
               placeholder="Birthday"
               className="input input-bordered  my-2"
@@ -72,6 +87,9 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
               <p className="text-red-500">{`${errors.date.message}`}</p>
             )}
             <div className="form-control">
+                <div className="label mb-0">
+                    <span className="label-text">Gender</span>
+                </div>
               <label className="label justify-start cursor-pointer">
                 <input
                   {...register("gender", { required: "Gender is required" })}
@@ -82,8 +100,6 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
                 />
                 <span className="label-text">Male</span>
               </label>
-            </div>
-            <div className="form-control">
               <label className="label justify-start cursor-pointer">
                 <input
                   {...register("gender", { required: "Gender is required" })}
@@ -98,13 +114,13 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
             {errors.gender && (
               <p className="text-red-500">{`${errors.gender.message}`}</p>
             )}
+            <div className="label mb-0">
+              <span className="label-text">Role</span>
+            </div>
             <select
               className="select select-bordered w-full my-2"
               {...register("role", { required: "Please select a user role" })}
             >
-              <option disabled selected>
-                Role
-              </option>
               <option value={"admin"}>Admin</option>
               <option value={"user"}>User</option>
               <option value={"guest"}>Guest</option>
@@ -132,7 +148,7 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
               <p className="text-red-500">{`${errors.terms.message}`}</p>
             )}
             <button
-              className="btn btn-primary w-28 ml-auto"
+              className="btn btn-primary w-28 ml-auto bg-gray-900"
               disabled={isSubmitting}
             >
               Update

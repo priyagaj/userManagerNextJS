@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 interface StateType {
     list: User[];
+    searchVal: string;
 }
 interface User {
     name: string;
@@ -12,7 +13,8 @@ interface User {
     id: number;
 }
 const initialState: StateType = {
-    list: []
+    list: [],
+    searchVal: ''
 }
 
 export const userSlice = createSlice({
@@ -31,8 +33,12 @@ export const userSlice = createSlice({
            const itemIndex = state.list.findIndex(item => item.id === action.payload.id);
            state.list[itemIndex] = action.payload
         },
+        setSearchVal: (state,action) => {
+            console.log('inside seach---------',action)
+            state.searchVal = action.payload;
+        }
     }
 })
-export const { create,update,deleteItem } = userSlice.actions;
+export const { create,update,deleteItem,setSearchVal } = userSlice.actions;
 
 export default userSlice.reducer;
