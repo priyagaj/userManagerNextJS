@@ -24,7 +24,7 @@ const UserTable = () => {
     }
     if(searchVal.length > 1){
         newList = list?.filter((item) => item.name.toLowerCase().includes(searchVal))
-        console.log('search usr',newList,userList)
+        // console.log('search usr',newList,userList)
     }
     
     setUserList(newList)
@@ -36,9 +36,9 @@ const UserTable = () => {
   };
   const deleteUser = (user: User) => {
     dispatch(deleteItem(user));
-    console.log("delete------", user);
+    // console.log("delete------", user);
   };
-  console.log('userList--------',userList)
+  // console.log('userList--------',userList)
   return (
     <div className="overflow-x-auto mx-20">
       {userList?.length ? (

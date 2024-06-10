@@ -23,7 +23,16 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
   } = useForm({
     values: currentUser
   });
-  console.log('currentUser',currentUser)
+
+  const validateAge = (value) => {
+    if (!value) return "Age is required";
+    if (isNaN(value)) return "Age must be a number";
+    if (value < 0) return "Age cannot be negative";
+    if (value < 18) return "You must be at least 18 years old";
+    if (value > 120) return "Age cannot be greater than 120";
+    return true;
+  };
+  // console.log('currentUser',currentUser)
   
   const openAddUser = () => {
     document.getElementById("my_modal_2").showModal();
@@ -66,10 +75,12 @@ const EditUser = ({currentUser}: {currentUser:User} ) => {
               <span className="label-text">Age</span>
             </div>
             <input
-              {...register("age", { required: "Age is required" })}
+              {...register("age", { validate: validateAge })}
               type="number"
               placeholder="Age"
               className="input input-bordered  my-2"
+              min="18"
+              max="100"
             />
             {errors.age && (
               <p className="text-red-500">{`${errors.age.message}`}</p>

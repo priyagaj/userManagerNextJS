@@ -22,7 +22,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         create: (state,action) => {
-            console.log('create---------',action)
+            // console.log('create---------',action)
             state.list.push(action.payload)
         },
         deleteItem: (state,action) => {
@@ -34,7 +34,7 @@ export const userSlice = createSlice({
            state.list[itemIndex] = action.payload
         },
         setSearchVal: (state,action) => {
-            console.log('inside seach---------',action)
+            // console.log('inside seach---------',action)
             state.searchVal = action.payload;
         }
     }

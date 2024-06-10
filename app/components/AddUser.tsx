@@ -21,6 +21,27 @@ const AddUser = () => {
   const searchByName = (e) => {
     dispatch(setSearchVal(e.target.value))
   }
+
+  const validateAge = (value) => {
+    if (!value) return "Age is required";
+    if (isNaN(value)) return "Age must be a number";
+    if (value < 0) return "Age cannot be negative";
+    if (value < 18) return "You must be at least 18 years old";
+    if (value > 120) return "Age cannot be greater than 120";
+    return true;
+  };
+
+  const calculateAge = (birthdate) => {
+    const today = new Date();
+    const dob = new Date(birthdate);
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   return (
     <>
       <div className="flex justify-between my-5 mx-20">
@@ -85,10 +106,12 @@ const AddUser = () => {
               <span className="label-text">Age</span>
             </div>
             <input
-              {...register("age", { required: "Age is required" })}
+              {...register("age", { validate : validateAge})}
               type="number"
               placeholder="Age"
               className="input input-bordered  my-2"
+              min={18}
+              max={100}
             />
             {errors.age && (
               <p className="text-red-500">{`${errors.age.message}`}</p>
